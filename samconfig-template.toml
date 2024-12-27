@@ -1,0 +1,24 @@
+version = 0.1
+
+[lambda-logs-filtering.package.parameters]
+s3_bucket = "${SAM_BUCKET}"
+s3_prefix = "serverless-learning"
+region = "${REGION}"
+template_file = "lambda-logs-filtering/template.yml"
+output_template_file = "lambda-logs-filtering/out.yml"
+${PROFILE}
+
+[lambda-logs-filtering.deploy.parameters]
+s3_bucket = "${SAM_BUCKET}"
+s3_prefix = "serverless-learning"
+region = "${REGION}"
+stack_name = "serverless-learning-lambda-logs-filtering"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+template_file = "lambda-logs-filtering/out.yml"
+parameter_overrides = """\
+    App=serverless-learning \
+    Project=AWS Serverless Learning
+"""
+tags = "App=\"serverless-learning\" Project=\"AWS Serverless Learning\""
+${PROFILE}
