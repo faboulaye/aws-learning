@@ -1,0 +1,14 @@
+{
+  "name": "aws-serverless-learning",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Firdaws Aboulaye",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "init:samconfig": "envsub samconfig-template.toml samconfig.toml"
+  },
+  "devDependencies": {
+    "envsub": "^4.1.0"
+  }
+}

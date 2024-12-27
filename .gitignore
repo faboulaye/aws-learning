@@ -1,0 +1,4 @@
+.idea
+.node_modules
+out.yml
+samconfig.toml

@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS Serverless Learning: Logs filtering
+
+Parameters:
+  Project:
+    Type: String
+    Default: AWS Serverless Learning
+  App:
+    Type: String
+    Description: Application environment name
+    Default: serverless-learning
+  LogLevel:
+    Type: String
+    Description: Application log levels
+    Default: INFO
+    AllowedValues:
+      - TRACE
+      - DEBUG
+      - INFO
+      - WARN
+      - ERROR
+      - FATAL
+  LogRetentionInDays:
+    Type: Number
+    Description: CloudWatch Logs retention period before deletion
+    Default: 7
+  NodeRuntime:
+    Type: String
+    Description: Node runtime version
+    Default: nodejs22.x
+
+Globals:
+  Function:
+    Runtime: !Ref NodeRuntime
+    Handler: index.handler
+    Tags:
+      App: !Ref App
+      Project: !Ref Project
+
+Resources:
+
+  # Functions
+  FilteringLogsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: filtering-logs
+      FunctionName: !Sub ${App}-filtering-logs
+      Description: Filter logs by log level
+      LoggingConfig:
+        ApplicationLogLevel: !Ref LogLevel
+        LogFormat: JSON
+
+  # Logs
+  FilteringLogsFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${App}-filtering-logs
+      RetentionInDays: !Ref LogRetentionInDays
