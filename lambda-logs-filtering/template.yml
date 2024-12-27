@@ -48,6 +48,9 @@ Resources:
       CodeUri: filtering-logs
       FunctionName: !Sub ${App}-filtering-logs
       Description: Filter logs by log level
+      LoggingConfig:
+        ApplicationLogLevel: !Ref LogLevel
+        LogFormat: JSON
 
   # Logs
   FilteringLogsFunctionLog:
